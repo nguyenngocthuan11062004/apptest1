@@ -21,16 +21,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Apptest1">
 
+        <!-- ✅ Splash = LAUNCHER -->
         <activity
-            android:name=".MainActivity"
+            android:name=".splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PhishingResultActivity"></activity>
-        <!-- FileProvider: lưu ý sử dụng ${applicationId}.provider (chính xác: application, không appliction) -->
+
+        <!-- Onboarding -->
+        <activity
+            android:name=".onboarding.OnboardingActivity"
+            android:exported="false" />
+
+        <!-- Main (KHÔNG launcher nữa) -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".PhishingResultActivity" />
+
+        <!-- FileProvider -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
