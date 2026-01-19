@@ -28,6 +28,7 @@ import java.util.Date
 import java.util.Locale
 import android.content.Intent
 import android.util.Log
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -121,7 +122,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // ⭐ Nút CHECK PHISHING → Gọi server
         checkPhisingBtn.setOnClickListener {
             val text = resultText.text.toString().trim()
 
@@ -144,6 +144,17 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Lỗi: $response", Toast.LENGTH_LONG).show()
                     }
                 }
+            }
+        }
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNav.selectedItemId = R.id.tab_scan
+
+        bottomNav.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.tab_scan -> true
+                R.id.tab_history -> { startActivity(Intent(this, HistoryActivity::class.java)); true }
+                R.id.tab_howto -> { startActivity(Intent(this, HowToActivity::class.java)); true }
+                else -> false
             }
         }
 
@@ -195,6 +206,7 @@ class MainActivity : AppCompatActivity() {
                     clipboard?.setPrimaryClip(clip)
                     Toast.makeText(this, "Text copied", Toast.LENGTH_SHORT).show()
                 }
+                checkPhisingBtn.performClick()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()

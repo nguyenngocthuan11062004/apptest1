@@ -13,63 +13,71 @@
 
         <!-- TITLE -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Example Crypto Email Scam"
-            android:textSize="24sp"
+            android:textSize="26sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="16dp"/>
+            android:textColor="#000000"
+            android:layout_marginBottom="20dp"/>
 
         <!-- FAKE EMAIL CARD -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#F5F7FA"
-            android:padding="16dp"
-            android:layout_marginBottom="20dp">
+            android:background="@drawable/bg_card"
+            android:padding="20dp"
+            android:layout_marginBottom="24dp">
 
+            <!-- Sender name -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ledger"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textColor="#000000"/>
 
+            <!-- Sender email -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="security@ledger-secure.com"
                 android:textSize="14sp"
                 android:textColor="#007AFF"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="URGENT: Security breach detected - Action Required"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Dear Ledger Customer, We have detected unusual activity..."
-                android:textSize="14sp"
-                android:textColor="#666666"
                 android:layout_marginBottom="12dp"/>
 
+            <!-- Subject -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="URGENT: Security breach detected – Action Required"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Email preview -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dear Ledger Customer, We have detected unusual activity on your wallet. Immediate action is required to prevent loss of funds."
+                android:textSize="14sp"
+                android:textColor="#666666"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Fake CTA -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SECURE YOUR WALLET"
                 android:gravity="center"
-                android:padding="12dp"
-                android:background="#E3F0FF"
+                android:padding="14dp"
+                android:textStyle="bold"
                 android:textColor="#007AFF"
-                android:textStyle="bold"/>
+                android:background="@drawable/bg_fake_cta"/>
         </LinearLayout>
 
         <!-- ARROW -->
@@ -80,65 +88,78 @@
             android:textSize="32sp"
             android:textColor="#FF3B30"
             android:layout_gravity="center"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="20dp"/>
 
-        <!-- REPORT CARD -->
+        <!-- REPORT / ANALYSIS CARD -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#FFF5F5"
-            android:padding="16dp">
+            android:background="@drawable/bg_report_card"
+            android:padding="20dp">
 
+            <!-- Header -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Report by Scam Helper"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:background="#FF3B30"
-                android:padding="8dp"
-                android:textStyle="bold"/>
+                android:padding="10dp"
+                android:layout_marginBottom="16dp"/>
 
+            <!-- Category -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Crypto Phishing Scam"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginTop="12dp"/>
+                android:textColor="#000000"
+                android:layout_marginBottom="4dp"/>
 
+            <!-- Source -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email Message"
                 android:textSize="14sp"
                 android:textColor="#777777"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="16dp"/>
 
-            <!-- BULLETS -->
+            <!-- Findings -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="• Spoofed sender domain"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="• Urgent action required language"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="• Security threat scare tactics"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="• Matches known crypto scam patterns"
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:textColor="#000000"/>
         </LinearLayout>
 
     </LinearLayout>

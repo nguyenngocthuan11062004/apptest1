@@ -43,6 +43,8 @@
 
         <activity
             android:name=".PhishingResultActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".HowToActivity" />
 
         <!-- FileProvider -->
         <provider
