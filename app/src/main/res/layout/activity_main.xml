@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Scam Helper"
+            android:text="SafeEye AI"
             android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="#000000" />
@@ -62,8 +62,14 @@
             android:textSize="14sp"
             android:textColor="#8E8E93"
             android:gravity="center" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
 
-        <!-- Spacer -->
+            <include layout="@layout/view_ai_assistant" />
+
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"

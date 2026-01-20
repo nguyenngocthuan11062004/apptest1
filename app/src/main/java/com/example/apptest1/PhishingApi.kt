@@ -14,10 +14,8 @@ object PhishingApi {
 
     private val client = OkHttpClient()
 
-    // ⚠️ ĐỔI IP NÀY THÀNH IP SERVER CỦA ANH
-    private const val SERVER_URL = "http://192.168.1.10:8000/predict"
+    private const val SERVER_URL = "http://192.168.68.110:8000/predict"
 
-    // Kiểu content-type đúng cho JSON
     private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
 
     fun checkPhishing(text: String, callback: (Boolean, String) -> Unit) {
@@ -46,7 +44,21 @@ object PhishingApi {
 
                 if (!response.isSuccessful || bodyString == null) {
                     callback(false, "Server error: ${response.code}")
-                } else {
+                    return
+                }
+
+                try {
+                    val json = JSONObject(bodyString)
+                    android.util.Log.d("PhishingApi", "Response JSON (raw): $bodyString")
+                    android.util.Log.d(
+                        "PhishingApi",
+                        "Response JSON (pretty):\n${json.toString(2)}"
+                    )
+
+                    callback(true, json.toString())
+                } catch (e: Exception) {
+                    // Trường hợp backend trả string thuần
+                    android.util.Log.d("PhishingApi", "Response is not JSON: $bodyString")
                     callback(true, bodyString)
                 }
             }

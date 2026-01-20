@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <!-- ⚠️ ĐỔI IP NÀY THÀNH IP SERVER CỦA ANH -->
-        <domain includeSubdomains="true">192.168.1.10</domain>
+        <domain includeSubdomains="true">192.168.68.110</domain>
     </domain-config>
 
-    <!-- Cho phép HTTP toàn app (DEV MODE) -->
     <base-config cleartextTrafficPermitted="true" />
 </network-security-config>

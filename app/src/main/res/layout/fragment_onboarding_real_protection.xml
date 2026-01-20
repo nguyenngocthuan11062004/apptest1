@@ -86,7 +86,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="With Scam Helper:"
+                android:text="With SafeEye AI:"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="#007AFF"

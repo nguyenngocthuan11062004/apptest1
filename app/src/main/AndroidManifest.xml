@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.apptest1">
@@ -6,6 +5,7 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
@@ -21,10 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Apptest1">
 
-        <!-- ✅ Splash = LAUNCHER -->
+        <!-- Splash (LAUNCHER) -->
         <activity
             android:name=".splash.SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,13 +37,12 @@
             android:name=".onboarding.OnboardingActivity"
             android:exported="false" />
 
-        <!-- Main (KHÔNG launcher nữa) -->
+        <!-- Main -->
         <activity
             android:name=".MainActivity"
             android:exported="true" />
 
-        <activity
-            android:name=".PhishingResultActivity" />
+        <activity android:name=".PhishingResultActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".HowToActivity" />
 

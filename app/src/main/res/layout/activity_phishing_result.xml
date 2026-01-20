@@ -1,14 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/phishingResultText"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Phishing Result"
-        android:textSize="18sp" />
-</LinearLayout>
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Header -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email Security Scan"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#027BFE"
+            android:gravity="center"
+            android:paddingBottom="24dp" />
+
+        <!-- Result Card -->
+        <LinearLayout
+            android:id="@+id/resultCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_result_gradient"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/resultIcon"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_warning_v2"
+                android:paddingBottom="12dp" />
+
+            <TextView
+                android:id="@+id/resultText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PHISHING"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#FF3B30"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/detailText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This email is highly suspicious."
+                android:textSize="14sp"
+                android:textColor="#444444"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="16dp" />
+
+            <TextView
+                android:id="@+id/confidenceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confidence: 99%"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="8dp" />
+
+            <ProgressBar
+                android:id="@+id/confidenceBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:max="100"
+                android:progress="99"
+                android:progressTint="#FF3B30"
+                android:backgroundTint="#E0E0E0" />
+
+            <Button
+                android:id="@+id/btnAnalyzeAI"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:text="Analyze with AI"
+                android:textAllCaps="false"
+                android:backgroundTint="#027BFE"
+                android:textColor="@android:color/white" />
+
+            <!-- AI Explanation -->
+            <include
+                layout="@layout/view_ai_explanation" />
+
+            <!-- 🔁 Continue checking scams -->
+            <Button
+                android:id="@+id/btnContinueCheck"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:text="Continue checking scams"
+                android:textAllCaps="false"
+                android:backgroundTint="#EAF2FF"
+                android:textColor="#027BFE" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
