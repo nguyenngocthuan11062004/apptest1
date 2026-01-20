@@ -12,6 +12,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     defaultConfig {
         applicationId = "com.example.apptest1"
@@ -21,6 +22,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField(
+            "String",
+            "API_KEY",
+            "\"${project.properties["API_KEY"]}\""
+        )
     }
 
     buildTypes {

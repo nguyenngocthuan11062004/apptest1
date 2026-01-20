@@ -5,14 +5,14 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
+import com.example.apptest1.BuildConfig
 
 object GeminiApi {
 
-    // 🔐 TODO: move to BuildConfig / remote config khi lên prod
-    private const val API_KEY = "AIzaSyDanreEaJxBdG2AINps1TL4i4xEEjT87zc"
+    val apiKey = BuildConfig.API_KEY
 
     private const val ENDPOINT =
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$API_KEY"
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${BuildConfig.API_KEY}"
 
     private val client = OkHttpClient()
     private val JSON = "application/json; charset=utf-8".toMediaType()
