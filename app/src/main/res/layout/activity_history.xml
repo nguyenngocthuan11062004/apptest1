@@ -3,25 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- HEADER -->
+    <TextView
+        android:id="@+id/titleHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scan History"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="20dp"
+        android:textColor="@android:color/black" />
 
     <!-- CONTENT -->
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_weight="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="History"
-            android:textSize="22sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        <!-- EMPTY STATE -->
+        <LinearLayout
+            android:id="@+id/emptyStateLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="visible">
 
-    <!-- BOTTOM BAR -->
+            <!-- ICON (bạn tự thay ảnh) -->
+            <ImageView
+                android:id="@+id/emptyIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_historyv2"
+                android:contentDescription="empty history" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No History Yet"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your scan history will appear here."
+                android:textSize="14sp"
+                android:textColor="#777777"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <!-- HISTORY LIST -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/historyRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:clipToPadding="false"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <!-- BOTTOM NAV -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"

@@ -38,6 +38,6 @@ class HowToActivity : AppCompatActivity() {
         val intent = Intent(this, target)
         startActivity(intent)
         overridePendingTransition(0, 0)
-        finish() // 🔥 QUAN TRỌNG: không để stack chồng
+        finish()
     }
 }

@@ -28,6 +28,7 @@ import java.io.File
 import java.io.IOException
 import java.util.Date
 import java.util.Locale
+import  com.example.apptest1.model.HistoryItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var copyTextBtn: Button
 
     private var currenPhotoPath: String? = null
+    private var selectedImageUri: Uri? = null
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var requestReadPermissionLauncher: ActivityResultLauncher<String>
@@ -59,8 +61,8 @@ class MainActivity : AppCompatActivity() {
         val aiView = AiAssistantView(findViewById(R.id.aiAssistantContainer))
         aiView.bind()
         requestPermissionLauncher =
-            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-                if (isGranted) captureImage()
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+                if (granted) captureImage()
                 else Toast.makeText(this, "Camera denied", Toast.LENGTH_SHORT).show()
             }
 
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                 else Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
             }
 
-        // ===== Camera launcher =====
+        // ===== Camera =====
         takePictureLauncher =
             registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
                 if (success) {
@@ -82,23 +84,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-        // ===== Gallery launcher =====
         pickImageLauncher =
             registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
                 uri?.let {
-                    try {
-                        val inputStream = contentResolver.openInputStream(it)
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        inputStream?.close()
-                        cameraImage.setImageBitmap(bitmap)
-                        recognizeText(bitmap)
-                    } catch (e: Exception) {
-                        Toast.makeText(this, "Error reading image", Toast.LENGTH_SHORT).show()
-                    }
+                    selectedImageUri = it
+                    val inputStream = contentResolver.openInputStream(it)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    inputStream?.close()
+                    cameraImage.setImageBitmap(bitmap)
+                    recognizeText(bitmap)
                 }
             }
 
-        // ===== Clicks =====
         captureImgBtn.setOnClickListener {
             requestPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
@@ -121,12 +118,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // ===== Button check (giữ nguyên logic cũ) =====
         checkPhisingBtn.setOnClickListener {
             checkPhishing(resultText.text.toString().trim())
         }
 
-        // ===== Bottom navigation =====
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNav.selectedItemId = R.id.tab_scan
 
@@ -146,92 +141,79 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // ==========================
-    // Camera utils
-    // ==========================
     private fun createImageFile(): File {
-        val timeStamp: String =
+        val timeStamp =
             SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("JEP_${timeStamp}_", ".jpg", storageDir).apply {
             currenPhotoPath = absolutePath
         }
     }
 
     private fun captureImage() {
-        val photoFile: File? = try {
+        val photoFile = try {
             createImageFile()
-        } catch (ex: IOException) {
+        } catch (e: IOException) {
             Toast.makeText(this, "Error creating file", Toast.LENGTH_SHORT).show()
             null
         }
 
-        photoFile?.also {
-            val photoUri: Uri = FileProvider.getUriForFile(
+        photoFile?.let {
+            val uri = FileProvider.getUriForFile(
                 this,
                 "${applicationContext.packageName}.provider",
                 it
             )
-            takePictureLauncher.launch(photoUri)
+            takePictureLauncher.launch(uri)
         }
     }
 
-    // ==========================
-    // OCR
-    // ==========================
     private fun recognizeText(bitmap: Bitmap) {
         val image = InputImage.fromBitmap(bitmap, 0)
         val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 
         recognizer.process(image)
-            .addOnSuccessListener { ocrText ->
-                val recognizedText = ocrText.text
-
-                resultText.text = recognizedText
+            .addOnSuccessListener { result ->
+                val text = result.text
+                resultText.text = text
                 resultText.movementMethod = ScrollingMovementMethod()
-
-                copyTextBtn.visibility = Button.GONE
-                copyTextBtn.setOnClickListener {
-                    val clipboard = ContextCompat.getSystemService(
-                        this,
-                        android.content.ClipboardManager::class.java
-                    )
-                    val clip = android.content.ClipData.newPlainText(
-                        "recognized text",
-                        recognizedText
-                    )
-                    clipboard?.setPrimaryClip(clip)
-                    Toast.makeText(this, "Text copied", Toast.LENGTH_SHORT).show()
-                }
-
-                // ✅ AUTO CHECK PHISHING – không cần bấm nút
-                checkPhishing(recognizedText)
+                checkPhishing(text)
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener {
+                Toast.makeText(this, "OCR failed", Toast.LENGTH_SHORT).show()
             }
     }
 
-    // ==========================
-    // Phishing check (logic gốc, chỉ tách ra)
-    // ==========================
+
+    private fun getCurrentImagePath(): String? {
+        return currenPhotoPath ?: selectedImageUri?.toString()
+    }
+
+
     private fun checkPhishing(text: String) {
-        if (text.isBlank()) {
-            Toast.makeText(this, "Không có text để check", Toast.LENGTH_SHORT).show()
-            return
-        }
+        if (text.isBlank()) return
 
         PhishingApi.checkPhishing(text) { success, response ->
             runOnUiThread {
-                Log.d("MainActivity", "Phishing check result: $response")
-
                 if (success) {
+
+                    HistoryStorage.save(
+                        this,
+                        HistoryItem(
+                            text = text,
+                            result = response,
+                            imagePath = getCurrentImagePath(),
+                            time = System.currentTimeMillis()
+                        )
+                    )
+
                     val intent = Intent(this, PhishingResultActivity::class.java)
                     intent.putExtra("PHISHING_RESULT", response)
                     intent.putExtra("OCR_TEXT", text)
                     startActivity(intent)
+
                 } else {
-                    Toast.makeText(this, "Lỗi: $response", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, response, Toast.LENGTH_LONG).show()
                 }
             }
         }
