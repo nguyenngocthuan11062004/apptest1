@@ -14,8 +14,8 @@ object PhishingApi {
 
     private val client = OkHttpClient()
 
-    private const val SERVER_URL = "http://192.168.68.110:8000/predict"
-
+//    private const val SERVER_URL = "http://192.168.68.110:8000/predict"
+    private const val SERVER_URL = "http://192.168.1.10:8000/predict"
     private val JSON_MEDIA_TYPE = "application/json; charset=utf-8".toMediaType()
 
     fun checkPhishing(text: String, callback: (Boolean, String) -> Unit) {

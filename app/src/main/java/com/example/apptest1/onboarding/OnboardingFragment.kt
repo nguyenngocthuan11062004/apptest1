@@ -48,7 +48,6 @@ class OnboardingFragment : Fragment() {
 
                 val view = inflater.inflate(layoutRes, container, false)
 
-                // 🔥 CHỈ MÀN INFO_CARDS MỚI SET HTML
                 if (page.layoutStyle == StaticLayoutStyle.INFO_CARDS) {
                     val tv = view.findViewById<TextView>(R.id.tvCard2Text)
                     tv.text = HtmlCompat.fromHtml(
@@ -101,9 +100,9 @@ class OnboardingFragment : Fragment() {
                 subView?.text = option.subtitle
             }
 
-            // Nếu item layout có subtitle thì để trống (hoặc bạn map text phụ sau)
-            val subTextView = itemView.findViewById<TextView?>(R.id.tvOptionSub)
-            subTextView?.text = ""
+            // Set icon for each option dynamically
+            val optionIcon = itemView.findViewById<ImageView>(R.id.imgIcon)
+            optionIcon.setImageResource(option.iconResource)  // Gán icon từ OnboardingOption
 
             itemView.setOnClickListener {
                 selectedOptionId = option.id

@@ -24,10 +24,11 @@ class OnboardingActivity : AppCompatActivity() {
 
         pages = createPages()
 
+        // Set up ViewPager with pages
         binding.viewPager.adapter = OnboardingPagerAdapter(this, pages)
         binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-        // 🔥 INIT DOTS
+        // Initialize dots
         setupDots(pages.size)
         setActiveDot(0)
 
@@ -42,6 +43,7 @@ class OnboardingActivity : AppCompatActivity() {
             }
         )
 
+        // Handle CTA button click
         binding.btnCta.setOnClickListener {
             val current = binding.viewPager.currentItem
             if (current < pages.lastIndex) {
@@ -69,9 +71,8 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     /**
-     * ===== DOT INDICATOR =====
+     * DOT INDICATOR
      */
-
     private fun setupDots(total: Int) {
         val indicator = binding.dotIndicator
         indicator.removeAllViews()
@@ -107,9 +108,8 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     /**
-     * ===== NAVIGATION =====
+     * Navigation to Main Activity
      */
-
     private fun goToMain() {
         getSharedPreferences("app_prefs", MODE_PRIVATE)
             .edit()
@@ -121,11 +121,11 @@ class OnboardingActivity : AppCompatActivity() {
     }
 
     /**
-     * ===== DATA (THÊM BAO NHIÊU MÀN = THÊM BAO NHIÊU DOT) =====
+     * Create pages (each page represents an onboarding screen)
      */
     private fun createPages(): List<OnboardingPage> {
         return listOf(
-
+            // Trang 0 - STATIC
             OnboardingPage(
                 index = 0,
                 screenType = OnboardingScreenType.STATIC,
@@ -135,6 +135,7 @@ class OnboardingActivity : AppCompatActivity() {
                 layoutStyle = StaticLayoutStyle.BIG_COUNTER_44
             ),
 
+            // Trang 1 - OPTION (Fake Account, Fake Package, EzPass, Fake Bank)
             OnboardingPage(
                 index = 1,
                 screenType = OnboardingScreenType.OPTION,
@@ -144,30 +145,36 @@ class OnboardingActivity : AppCompatActivity() {
                     OnboardingOption(
                         id = "fake_account",
                         title = "Fake Account Alert",
-                        subtitle = "Your account will be suspended if not verified"
+                        subtitle = "Your account will be suspended if not verified",
+                        iconResource = R.drawable.ic_warning // Thêm icon cho fake_account
                     ),
                     OnboardingOption(
                         id = "fake_package",
                         title = "Fake Package Notification",
-                        subtitle = "Your delivery is pending additional payment"
+                        subtitle = "Your delivery is pending additional payment",
+                        iconResource = R.drawable.ic_package // Thêm icon cho fake_package
                     ),
                     OnboardingOption(
                         id = "ezpass",
                         title = "EZPass Toll Payment",
-                        subtitle = "Unpaid tolls require immediate action"
+                        subtitle = "Unpaid tolls require immediate action",
+                        iconResource = R.drawable.ic_car // Thêm icon cho ezpass
                     ),
                     OnboardingOption(
                         id = "fake_bank",
                         title = "Fake Bank Verification",
-                        subtitle = "Unusual activity detected on your account"
+                        subtitle = "Unusual activity detected on your account",
+                        iconResource = R.drawable.ic_bank// Thêm icon cho fake_bank
                     ),
                     OnboardingOption(
                         id = "none",
-                        title = "I've received none of these"
+                        title = "I've received none of these",
+                        iconResource = R.drawable.ic_none // Thêm icon cho none
                     )
                 )
             ),
 
+            // Trang 2 - OPTION (Confidence in spotting scams)
             OnboardingPage(
                 index = 2,
                 screenType = OnboardingScreenType.OPTION,
@@ -176,31 +183,38 @@ class OnboardingActivity : AppCompatActivity() {
                 options = listOf(
                     OnboardingOption(
                         id = "very_confident",
-                        title = "Very confident - I always know what to look for"
+                        title = "Very confident - I always know what to look for",
+                        iconResource = R.drawable.ic_mail // Ví dụ icon cho confidence
                     ),
                     OnboardingOption(
                         id = "somewhat_confident",
-                        title = "Somewhat confident - But I still worry sometimes"
+                        title = "Somewhat confident - But I still worry sometimes",
+                        iconResource = R.drawable.ic_chat // Ví dụ icon cho confidence
                     ),
                     OnboardingOption(
                         id = "not_very_confident",
-                        title = "Not very confident - They're getting more sophisticated"
+                        title = "Not very confident - They're getting more sophisticated",
+                        iconResource = R.drawable.ic_chatv2 // Ví dụ icon cho not confident
                     ),
                     OnboardingOption(
                         id = "concerned",
-                        title = "Concerned - I know someone who's been scammed"
+                        title = "Concerned - I know someone who's been scammed",
+                        iconResource = R.drawable.ic_social // Ví dụ icon cho concerned
                     )
                 )
             ),
+
+            // Trang 3 - STATIC (Scammers are getting smarter)
             OnboardingPage(
                 index = 3,
                 screenType = OnboardingScreenType.STATIC,
                 title = "Scammers are getting smarter",
                 ctaText = "Show me how to stay safe →",
                 layoutStyle = StaticLayoutStyle.INFO_CARDS,
-                // dùng description như payload (hoặc bạn tách field riêng nếu muốn)
                 description = null
             ),
+
+            // Trang 4 - STATIC (Example Crypto Email Scam)
             OnboardingPage(
                 index = 4,
                 screenType = OnboardingScreenType.STATIC,
@@ -208,6 +222,8 @@ class OnboardingActivity : AppCompatActivity() {
                 ctaText = "Show me more examples →",
                 layoutStyle = StaticLayoutStyle.EXAMPLE_SCAM
             ),
+
+            // Trang 5 - STATIC (Real People, Real Protection)
             OnboardingPage(
                 index = 5,
                 screenType = OnboardingScreenType.STATIC,

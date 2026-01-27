@@ -25,7 +25,8 @@ data class BulletItem(
 data class OnboardingOption(
     val id: String,
     val title: String,
-    val subtitle: String? = null
+    val subtitle: String? = null,
+    val iconResource: Int
 )
 data class OnboardingPage(
     val index: Int,
